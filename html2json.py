@@ -15,10 +15,30 @@ class TCParser():
 
     def dumpjson(self):
         html  = json.dumps(self.pagelist,ensure_ascii=False).encode('UTF-8');
-        html = re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img src="+urllib2.unquote(x.group(1))+">",html)
-        html = re.sub(" tc-normal-center","sc",html)
+        html = re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img class = 'pic' src="+urllib2.unquote(x.group(1))+">",html)
+        html = re.sub("<span[^>]+>","<span>",html)
         print html 
         return;
+
+    def json2file(self):
+        if (len(self.pagelist)<1):
+            return False;
+        prefix="2014"
+        i=0;
+        header = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link href = "css/common.css" type="text/css" rel="stylesheet"></head><body>';
+        tail = '<script src = js/common.js></script></body></html>';
+        while i<len(self.pagelist):
+            file = open(prefix+"_"+str(i+1)+".html","w");
+            file.write(header);
+            page = self.pagelist[i];
+            title = json.dumps(page["title"],ensure_ascii=False).encode('UTF-8').strip('"');
+            content = json.dumps(page["content"],ensure_ascii=False).encode('UTF-8').strip('"');
+            content= re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img class = 'pic' src="+urllib2.unquote(x.group(1))+">",content)
+            content = re.sub("<span[^>]+>","<span>",content)
+            file.write("<div id = 'title'>" + title + "</div>\n");
+            file.write("<div id = 'content'>" + content + "</div>\n");
+            file.write(tail);
+            i+=1;
 
     def parseBlock(self,block,page):
         if("func_type" in block.keys() and block["func_type"] == "TITLE"):
@@ -94,4 +114,5 @@ else:
 np = TCParser();
 np.process(url);
 np.dumpjson();
+np.json2file();
 
