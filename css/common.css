@@ -1,0 +1,29 @@
+#title{
+    color:#262626;
+    font-size:24px;
+    line-height:32px;
+    background-color:fafafa;
+    padding:6px;
+    margin:8px;
+}
+
+#content{
+    margin:8px;
+    background-color:#fafafa;
+    padding:6px;
+    font-size:16px;
+    line-height:24px;
+}
+
+#content>div{
+    font-size:18px;
+    line-height:28px;
+    text-indent:2em;
+    text-align:justify;
+    word-break:break-all;
+    overflow:hidden;
+    padding:2px;
+}
+.pic{
+    max-height:400px;
+}
