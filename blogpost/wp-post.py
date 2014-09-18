@@ -25,7 +25,8 @@ class TCParser():
     def json2file(self):
         if (len(self.pagelist)<1):
             return False;
-        prefix="data/"+str(int(time.time()));
+        os.system("rm -fr wp-data/14*");
+        prefix="wp-data/"+str(int(time.time()));
         i=0;
         header = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link href = "css/common.css" type="text/css" rel="stylesheet"></head><body>';
         tail = '<script src = js/common.js></script></body></html>';
@@ -36,7 +37,8 @@ class TCParser():
             title = json.dumps(page["title"],ensure_ascii=False).encode('UTF-8').strip('"');
             content = json.dumps(page["content"],ensure_ascii=False).encode('UTF-8').strip('"');
             content= re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img class = 'pic' src="+urllib2.unquote(x.group(1))+">",content)
-            content = re.sub("<span[^>]+>","<span>",content)
+            #content = re.sub("<span[^>]+>","<span>",content)
+            content = re.sub("<span\s+class=\\\\\" tc-normal-center\\\\\" style=\\\\\"display:block;\\\\\">","<span class = 'block-span'>",content);
             file.write("<div id = 'title'>" + title + "</div>\n");
             file.write("<div id = 'content'>" + content + "</div>\n");
             file.write(tail);
@@ -52,7 +54,7 @@ class TCParser():
             page = self.pagelist[i];
             content = json.dumps(page["content"],ensure_ascii=False).encode('UTF-8').strip('"');
             content= re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img class = 'pic' src="+urllib2.unquote(x.group(1))+">",content)
-            content = re.sub("<span[^>]+>","<span>",content)
+            content = re.sub("<span\s+class=\\\\\" tc-normal-center\\\\\" style=\\\\\"display:block;\\\\\">","<span class = 'block-span'>",content);
             if (i>0):
                 subtitle = json.dumps(page["title"],ensure_ascii=False).encode('UTF-8').strip('"');
                 body += "<div id = 'sub-title'>" + subtitle + "</div>\n";
