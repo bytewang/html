@@ -56,6 +56,7 @@ class TCParser():
             content= re.sub("<img[^>]*src=([^\s\"\\\]+)[^>]*>",lambda x:"<img class = 'pic' src="+urllib2.unquote(x.group(1))+">",content)
             content = re.sub("<span\s+class=\\\\\" tc-normal-center\\\\\" style=\\\\\"display:block;\\\\\">","<span class = 'block-span'>",content);
             if (i>0):
+                body += "<!--nextpage-->";
                 subtitle = json.dumps(page["title"],ensure_ascii=False).encode('UTF-8').strip('"');
                 body += "<div id = 'sub-title'>" + subtitle + "</div>\n";
 
