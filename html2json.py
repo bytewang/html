@@ -3,6 +3,7 @@ import json
 import urllib2
 import sys
 import re
+import time
 headers = {'User-Agent':'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5' };
 class TCParser():
     def __init__(self):
@@ -23,7 +24,7 @@ class TCParser():
     def json2file(self):
         if (len(self.pagelist)<1):
             return False;
-        prefix="2014"
+        prefix="data/"+str(int(time.time()));
         i=0;
         header = '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link href = "css/common.css" type="text/css" rel="stylesheet"></head><body>';
         tail = '<script src = js/common.js></script></body></html>';
